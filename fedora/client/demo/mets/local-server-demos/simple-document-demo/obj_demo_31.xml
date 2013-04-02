@@ -43,7 +43,7 @@
         </METS:file>
       </METS:fileGrp>
       <METS:fileGrp ID="DS3" STATUS="A" VERSIONABLE="true">
-        <METS:file CREATED="2012-11-15T17:42:56.065Z" ID="DS3.0"
+        <METS:file CREATED="2011-08-17T20:19:48.836Z" ID="DS3.0"
           MIMETYPE="image/svg+xml" OWNERID="R">
           <METS:FLocat LOCTYPE="URL"
             xlink:href="http://local.fedora.server/fedora-demo/simple-document-demo/batikBatik.svg" xlink:title="Another local copy of batikBatik.svg (control group R)"/>
