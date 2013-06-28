@@ -1,0 +1,15 @@
+fedora/data/activemq-data
+fedora/data/datastreamStore
+fedora/data/objectStore
+fedora/data/resourceIndex
+conf/Catalina/localhost/host-manager.xml
+conf/Catalina/localhost/manager.xml
+fedora/server/fedora-internal-use/fedora-internal-use-backend-service-policies/
+fedora/server/fedora-internal-use/has-started.txt
+fedora/server/logs/
+fedora/server/management/upload/
+fedora/server/status
+logs/catalina.*
+logs/host-manager.*
+logs/localhost.*
+logs/manager.*
