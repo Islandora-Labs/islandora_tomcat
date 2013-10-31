@@ -17,8 +17,8 @@ echo ERROR: The FEDORA_HOME environment variable is not defined.
 exit /B 1
 :gotFedoraHome
 
-if exist "%FEDORA_HOME%\client\fcrepo-client-admin-3.6.2.jar" goto clientJarFound
-echo ERROR: fcrepo-client-admin-3.6.2.jar not found in %FEDORA_HOME%\client
+if exist "%FEDORA_HOME%\client\fcrepo-client-admin-3.7.0.jar" goto clientJarFound
+echo ERROR: fcrepo-client-admin-3.7.0.jar not found in %FEDORA_HOME%\client
 exit /B 1
 :clientJarFound
 
@@ -33,7 +33,7 @@ goto gotJava
 set JAVA="%JAVA_HOME%\bin\java"
 :gotJava
 
-set CP="%FEDORA_HOME%\client\bin;%FEDORA_HOME%\client\fcrepo-client-admin-3.6.2.jar;%FEDORA_HOME%\client\cxf-bundle-2.6.2.jar"
+set CP="%FEDORA_HOME%\client\bin;%FEDORA_HOME%\client\fcrepo-client-admin-3.7.0.jar;%FEDORA_HOME%\client\cxf-bundle-2.7.3.jar"
 set OPTS=-Djava.endorsed.dirs="%FEDORA_HOME%\client\lib"
 set OPTS=%OPTS% -Djavax.net.ssl.trustStore="%FEDORA_HOME%\client\truststore"
 set OPTS=%OPTS% -Djavax.net.ssl.trustStorePassword=tomcat
