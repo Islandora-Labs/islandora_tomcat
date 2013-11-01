@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FgsConfig/build.xml -->
+<!-- called from FedoraGenericSearch/build.xml -->
+<project name="FgsConfig" default="noDefault" basedir=".">
+	<description>Fedora Generic Search Service configuration</description>
+
+	<property name="localBase" value="${local.PROTOCOL}://${local.HOSTPORT}"/>
+		
+	<target name="noDefault"
+	    description="no default">
+	</target>
+
+	<target name="configForWebApp"
+			depends="prep"
+        	description="build the config">
+		
+        <ant target="configLocal">
+			<property name="configName" value="configDemoOnSolr"/>
+			<property name="indexEngine" value="Solr"/>
+			<property name="indexBase" value="${local.SOLR_SERVER}"/>
+			<property name="indexDir" location="${local.SOLR_HOME}/${local.SOLR_INDEX_PATH}/data/index"/>
+			<property name="indexingDocXslt" value="foxmlToSolrGenerated"/>
+        </ant>
+		
+        <ant target="configDemoSearchResultFiltering">
+			<property name="configName" value="configDemoSearchResultFiltering"/>
+        </ant>
+        <ant target="configDemoIndexPerDS_fgs24_1019">
+			<property name="configName" value="configDemoIndexPerDS_fgs24_1019"/>
+        </ant>
+	</target>
+
+	<target name="configForLocalTest"
+			depends="prep"
+        	description="build the config">
+		
+        <ant target="configLocal">
+			<property name="configName" value="fgsconfigFinal"/>
+			<property name="indexEngine" value="Lucene"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLucene"/>
+        </ant>
+		
+        <ant target="configLocal">
+			<property name="configName" value="configDemoOnLucene"/>
+			<property name="indexEngine" value="Lucene"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLuceneDemo"/>
+        </ant>
+		
+        <ant target="configLocal">
+			<property name="configName" value="configDemoOnSolr"/>
+			<property name="indexEngine" value="Solr"/>
+			<property name="indexBase" value="${local.SOLR_SERVER}"/>
+			<property name="indexDir" location="${local.SOLR_HOME}/${local.SOLR_INDEX_PATH}/data/index"/>
+			<property name="indexingDocXslt" value="foxmlToSolrGenerated"/>
+        </ant>
+		<copy file="${plugin.dir}/configDemoOnSolr/index/FgsIndex/conf/schema-${solr.version}-for-fgs-${fedoragsearch.version}.xml" 
+			tofile="${local.SOLR_HOME}/${local.SOLR_INDEX_PATH}/conf/schema.xml" preservelastmodified="true" overwrite="true" />
+		
+        <ant target="configLocal">
+			<property name="configName" value="configDemoOnZebra"/>
+			<property name="indexEngine" value="Zebra"/>
+			<property name="indexBase" value="${local.ZEBRA_SERVER}"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToZebra"/>
+        </ant>
+		
+        <ant target="configLocal">
+			<property name="configName" value="configTestOnLucene"/>
+			<property name="indexEngine" value="Lucene"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLuceneGenerated"/>
+        </ant>
+		<copy file="FgsConfigIndexTemplate/LuceneTest/testFoxmlToLuceneWithExplicitParams.xslt" 
+			todir="${plugin.dir}/configTestOnLucene/index/FgsIndex" preservelastmodified="true" overwrite="true" />
+		
+        <ant target="configLocal">
+			<property name="configName" value="configTestOnLuceneFgs23"/>
+			<property name="indexEngine" value="Lucene"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLucene"/>
+        </ant>
+		<copy file="test_fgs23/foxmlToLuceneWithNotInline.xslt" 
+			tofile="${plugin.dir}/configTestOnLuceneFgs23/index/FgsIndex/foxmlToLucene.xslt" preservelastmodified="true" overwrite="true"/>
+		
+        <ant target="configDemoSearchResultFiltering">
+			<property name="configName" value="configDemoSearchResultFiltering"/>
+        </ant>
+		
+        <ant target="configDemoSearchResultFilteringReloadPolicies">
+        </ant>
+		
+        <ant target="configLocal">
+			<property name="configName" value="configTestOnLuceneFgs24_1010"/>
+			<property name="indexEngine" value="Lucene"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLucene"/>
+        </ant>
+		<copy file="FgsConfigIndexTemplate/LuceneTest/foxmlToLucene_fgs24_1010.xslt" 
+			tofile="${plugin.dir}/configTestOnLuceneFgs24_1010/index/FgsIndex/foxmlToLucene.xslt" preservelastmodified="true" overwrite="true" />
+		
+    	<ant target="configLocal">
+			<property name="configName" value="configTestOnSolrFgs24_1010"/>
+			<property name="indexEngine" value="Solr"/>
+			<property name="indexBase" value="${local.SOLR_SERVER}"/>
+			<property name="indexDir" location="${local.SOLR_HOME}/${local.SOLR_INDEX_PATH}/data/index"/>
+			<property name="indexingDocXslt" value="foxmlToSolr"/>
+   		</ant>
+		<copy file="FgsConfigIndexTemplate/SolrTest/foxmlToSolr_fgs24_1010.xslt" 
+			tofile="${plugin.dir}/configTestOnSolrFgs24_1010/index/FgsIndex/foxmlToSolr.xslt" preservelastmodified="true" overwrite="true" />
+		
+        <ant target="configDemoIndexPerDS_fgs24_1019">
+			<property name="configName" value="configDemoIndexPerDS_fgs24_1019"/>
+        </ant>
+
+        <ant target="configLocal">
+			<property name="configName" value="configTestOnLuceneFgs242_1083"/>
+			<property name="indexEngine" value="Lucene"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLucene"/>
+        </ant>
+		<copy file="test_fgs242_1083/foxmlToLucene_1083.xslt" 
+			tofile="${plugin.dir}/configTestOnLuceneFgs242_1083/index/FgsIndex/foxmlToLucene_1083.xslt" preservelastmodified="true" overwrite="true"/>
+
+		<copy file="log4j.xml" todir="${plugin.dir}" preservelastmodified="true" overwrite="true" />
+		
+		<replace file="${plugin.dir}/log4j.xml" token="LOGPATH" value="${local.FEDORA_HOME}/server/logs"/>
+		<replace file="${plugin.dir}/log4j.xml" token="LOGLEVEL" value="DEBUG"/>
+
+	</target>
+
+	<target name="configLocal"
+        	description="build a local config">
+		<property name="namesOfRepositories" value="FgsRepos"/>
+		<property name="namesOfIndexes" value="FgsIndex"/>
+		<property name="reposName" value="FgsRepos"/>
+		<property name="indexName" value="FgsIndex"/>
+		
+        <ant target="configLocalRoot">
+        </ant>
+		
+        <ant target="configLocalRepos">
+        </ant>
+		
+        <ant target="configLocalIndex">
+        </ant>
+
+		<copy todir="${build.dir}/FgsConfig/${configName}" preservelastmodified="true" overwrite="true">
+			<fileset dir="${plugin.dir}/${configName}"/>
+		</copy>
+		
+	</target>
+	
+	<target name="configDemoSearchResultFiltering"
+    		description="build the local config configDemoSearchResultFiltering">
+		
+        <ant target="configLocalRoot">
+        	<property name="namesOfRepositories" value="FgsRepos"/>
+        	<property name="namesOfIndexes" value="AllObjectsIndex SmileyAdminIndex SmileyUserIndex"/>
+        </ant>
+		<copy file="test_fgs24/adminBrowseIndexToHtmlForSrf.xslt" 
+			tofile="${plugin.dir}/${configName}/rest/adminBrowseIndexToHtml.xslt" preservelastmodified="true" overwrite="true"/>
+
+		<ant target="configLocalRepos">
+    		<property name="reposName" value="FgsRepos"/>
+        </ant>
+		<property name="indexEngine" value="Lucene"/>
+		
+        <ant target="configLocalIndex">
+			<property name="indexName" value="AllObjectsIndex"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/AllObjectsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLucene"/>
+        </ant>
+		
+        <ant target="configLocalIndex">
+			<property name="indexName" value="SmileyAdminIndex"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/SmileyAdminIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLucene"/>
+        </ant>
+		<copy file="test_fgs24/foxmlToLuceneForSmileyAdmin.xslt" 
+			tofile="${plugin.dir}/${configName}/index/SmileyAdminIndex/foxmlToLucene.xslt" preservelastmodified="true" overwrite="true"/>
+
+		<ant target="configLocalIndex">
+			<property name="indexName" value="SmileyUserIndex"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/SmileyUserIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLucene"/>
+        </ant>
+		<copy file="test_fgs24/foxmlToLuceneForSmileyUser.xslt" 
+			tofile="${plugin.dir}/${configName}/index/SmileyUserIndex/foxmlToLucene.xslt" preservelastmodified="true" overwrite="true"/>
+
+		<copy todir="${build.dir}/FgsConfig/${configName}" preservelastmodified="true" overwrite="true">
+			<fileset dir="${plugin.dir}/${configName}"/>
+		</copy>
+	</target>
+		
+	<target name="configDemoSearchResultFilteringReloadPolicies"
+	    	description="reload policies for the test junit-searchresultfiltering">
+		
+		<delete dir="${local.FEDORA_HOME}/data/fedora-xacml-policies/repository-policies/fgs-policies" />
+		<mkdir dir="${local.FEDORA_HOME}/data/fedora-xacml-policies/repository-policies/fgs-policies" />
+		<copy todir="${local.FEDORA_HOME}/data/fedora-xacml-policies/repository-policies/fgs-policies" preservelastmodified="true" overwrite="true">
+			<fileset dir="test_fgs24/fgs-policies"/>
+		</copy>
+		<!-- The environment variables FEDORA_HOME and CATALINA_HOME must be set in the configuration of this build
+			 or run this from command line before running the test -->
+		<exec executable="sh" dir="${local.FEDORA_HOME}/server/bin/">
+            <arg line=" fedora-reload-policies.sh reloadpolicies http fgsAdmin fgsAdminPassword"/>
+		</exec>
+	</target>
+	
+	<target name="configDemoIndexPerDS_fgs24_1019"
+    		description="build the local config configDemoIndexPerDS_fgs24_1019">
+		
+        <ant target="configLocalRoot">
+        	<property name="namesOfRepositories" value="FgsRepos"/>
+        	<property name="namesOfIndexes" value="FgsIndex FgsIndexForPDF FgsIndexForXML_SOURCE FgsIndexForXSLT"/>
+        </ant>
+		
+        <ant target="configLocalRepos">
+    		<property name="reposName" value="FgsRepos"/>
+        </ant>
+		
+		<property name="indexEngine" value="Lucene"/>
+		
+        <ant target="configLocalIndex">
+			<property name="indexName" value="FgsIndex"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLucene"/>
+        </ant>
+		<copy file="test_fgs24_1019/foxmlToLucene_fgs24_1019.xslt" 
+			tofile="${plugin.dir}/${configName}/index/FgsIndex/foxmlToLucene.xslt" preservelastmodified="true" overwrite="true"/>
+		
+        <ant target="configLocalIndex">
+			<property name="indexName" value="FgsIndexForPDF"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLuceneForPDF"/>
+        </ant>
+		<copy file="test_fgs24_1019/foxmlToLuceneForPDF.xslt" 
+			 todir="${plugin.dir}/${configName}/index/FgsIndexForPDF" preservelastmodified="true" overwrite="true"/>
+		
+        <ant target="configLocalIndex">
+			<property name="indexName" value="FgsIndexForXML_SOURCE"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLuceneForXML_SOURCE"/>
+        </ant>
+		<copy file="test_fgs24_1019/foxmlToLuceneForXML_SOURCE.xslt" 
+			 todir="${plugin.dir}/${configName}/index/FgsIndexForXML_SOURCE" preservelastmodified="true" overwrite="true"/>
+		
+        <ant target="configLocalIndex">
+			<property name="indexName" value="FgsIndexForXSLT"/>
+			<property name="indexDir" location="${local.FEDORA_HOME}/gsearch/FgsIndex"/>
+			<property name="indexingDocXslt" value="foxmlToLuceneForXSLT"/>
+        </ant>
+		<copy file="test_fgs24_1019/foxmlToLuceneForXSLT.xslt" 
+			 todir="${plugin.dir}/${configName}/index/FgsIndexForXSLT" preservelastmodified="true" overwrite="true"/>
+
+		<copy todir="${build.dir}/FgsConfig/${configName}" preservelastmodified="true">
+			<fileset dir="${plugin.dir}/${configName}"/>
+		</copy>
+		
+	</target>
+
+	<target name="configLocalRoot"
+        	description="build the root of a local config">
+		
+		<delete dir="${plugin.dir}/${configName}" />
+		<mkdir dir="${plugin.dir}/${configName}" />
+		<copy todir="${plugin.dir}/${configName}" preservelastmodified="true" overwrite="true">
+			<fileset dir="FgsConfigTemplate"/>
+		</copy>
+
+		<replace file="${plugin.dir}/${configName}/fgsconfigObjects.properties" token="FGSCONFIGOBJECTSBASE" value="${localBase}"/>
+		<replace file="${plugin.dir}/${configName}/fgsconfigObjects.properties" token="FGSCONFIGOBJECTSAPPNAME" value="fedora"/>
+		<replace file="${plugin.dir}/${configName}/fgsconfigObjects.properties" token="FGSCONFIGOBJECTSUSER" value="fgsAdmin"/>
+		<replace file="${plugin.dir}/${configName}/fgsconfigObjects.properties" token="FGSCONFIGOBJECTSPASS" value="fgsAdminPassword"/>
+		<replace file="${plugin.dir}/${configName}/fgsconfigObjects.properties" token="FGSCONFIGOBJECTSPATH" value="${local.FGSCONFIGOBJECTS_HOME}/${tomcat.basename}/webapps/fedoragsearch/WEB-INF/classes/${configName}"/>
+		
+		<replace file="${plugin.dir}/${configName}/fedoragsearch.properties" token="GSEARCHBASE" value="${localBase}"/>
+		<replace file="${plugin.dir}/${configName}/fedoragsearch.properties" token="GSEARCHAPPNAME" value="fedoragsearch"/>
+		<replace file="${plugin.dir}/${configName}/fedoragsearch.properties" token="GSEARCHUSER" value="fgsAdmin"/>
+		<replace file="${plugin.dir}/${configName}/fedoragsearch.properties" token="GSEARCHPASS" value="fgsAdminPassword"/>
+		<replace file="${plugin.dir}/${configName}/fedoragsearch.properties" token="CONFIGPATH" value="${local.FEDORA_HOME}/${tomcat.basename}/webapps/fedoragsearch/WEB-INF/classes/${configName}"/>
+		<replace file="${plugin.dir}/${configName}/fedoragsearch.properties" token="REPOSNAMES" value="${namesOfRepositories}"/>
+		<replace file="${plugin.dir}/${configName}/fedoragsearch.properties" token="INDEXNAMES" value="${namesOfIndexes}"/>
+
+		<replace file="${plugin.dir}/${configName}/rest/adminCommonToHtml.xslt" token="FGSCONFIGNAME" value="${configName}"/>
+		
+	</target>
+
+	<target name="configLocalRepos"
+        	description="build a repos of a local config">
+
+		<copy todir="${plugin.dir}/${configName}/repository/${reposName}" preservelastmodified="true" overwrite="true">
+			<fileset dir="FgsConfigReposTemplate"/>
+		</copy>
+	
+		<replace file="${plugin.dir}/${configName}/repository/${reposName}/repository.properties" token="REPOSNAME" value="${reposName}"/>
+		<replace file="${plugin.dir}/${configName}/repository/${reposName}/repository.properties" token="FEDORABASE" value="${localBase}"/>
+		<replace file="${plugin.dir}/${configName}/repository/${reposName}/repository.properties" token="FEDORAAPPNAME" value="fedora"/>
+		<replace file="${plugin.dir}/${configName}/repository/${reposName}/repository.properties" token="FEDORAUSER" value="fedoraAdmin"/>
+		<replace file="${plugin.dir}/${configName}/repository/${reposName}/repository.properties" token="FEDORAPASS" value="fedoraAdminPassword"/>
+		<replace file="${plugin.dir}/${configName}/repository/${reposName}/repository.properties" token="FEDORAVERSION" value="${fedora.version}"/>
+		<replace file="${plugin.dir}/${configName}/repository/${reposName}/repository.properties" token="FEDORAOBJECTDIR" value="${local.FEDORA_HOME}/data/objectStore"/>
+		
+	</target>
+
+	<target name="configLocalIndex"
+        	description="build an index of a local config">
+		<copy todir="${plugin.dir}/${configName}/index/${indexName}" preservelastmodified="true" overwrite="true">
+			<fileset dir="FgsConfigIndexTemplate/${indexEngine}"/>
+		</copy>
+
+		<replace file="${plugin.dir}/${configName}/index/${indexName}/index.properties" token="INDEXNAME" value="${indexName}"/>
+		<replace file="${plugin.dir}/${configName}/index/${indexName}/index.properties" token="INDEXBASE" value="${indexBase}"/>
+		<replace file="${plugin.dir}/${configName}/index/${indexName}/index.properties" token="INDEXDIR" value="${indexDir}"/>
+		<replace file="${plugin.dir}/${configName}/index/${indexName}/index.properties" token="INDEXINGDOCXSLT" value="${indexingDocXslt}"/>
+		
+	</target>
+
+	<target name="prep"
+	          description="prepare">
+        <ant target="generateIndexingXslt">
+			<property name="foxml.dir" value="indexingXsltGenerator/foxml"/>
+        </ant>
+	</target>
+
+	<target name="generateIndexingXslt"
+	          description="generate indexing stylesheet from a set of foxml records">
+		<property name="foxml.dir" location="indexingXsltGenerator/foxml" />
+		<delete dir="indexingXsltGenerator/generatedFiles" />
+		<delete file="indexingXsltGenerator/generatedFiles/foxmls.xml" />
+		<concat destfile="indexingXsltGenerator/generatedFiles/foxmls.xml">
+			<header>&lt;root></header>
+		    <fileset dir="${foxml.dir}"/>
+			<filterchain>
+				<filterreader classname="org.apache.tools.ant.filters.LineContains">
+					<param type="negate" value="true"/>
+					<param type="contains" value="?>"/>
+				</filterreader>
+			</filterchain>
+			<footer>&lt;/root></footer>
+		</concat>
+		<xslt 
+			in="indexingXsltGenerator/generatedFiles/foxmls.xml"
+			out="indexingXsltGenerator/generatedFiles/fields.xml"
+			extension=".xml"
+			style="indexingXsltGenerator/foxmlToFields.xslt">
+		</xslt>
+		<xslt 
+			in="indexingXsltGenerator/generatedFiles/fields.xml"
+			out="indexingXsltGenerator/generatedFiles/fieldsSorted.xml"
+			extension=".xml"
+			style="indexingXsltGenerator/fieldsToFieldsSorted.xslt">
+		</xslt>
+		<xslt 
+			in="indexingXsltGenerator/generatedFiles/fieldsSorted.xml"
+			out="indexingXsltGenerator/generatedFiles/fieldsUnique.xml"
+			extension=".xml"
+			style="indexingXsltGenerator/fieldsSortedToFieldsUnique.xslt">
+		</xslt>
+
+			<xslt 
+				in="indexingXsltGenerator/generatedFiles/fieldsUnique.xml"
+				out="indexingXsltGenerator/generatedFiles/foxmlToLuceneGenerated.xslt"
+				extension=".xslt"
+				style="indexingXsltGenerator/fieldsUniqueToXsltForLucene.xslt">
+			</xslt>
+	        <copy file="indexingXsltGenerator/generatedFiles/foxmlToLuceneGenerated.xslt" todir="FgsConfigIndexTemplate/Lucene/" preservelastmodified="true" overwrite="true"/>
+
+			<xslt 
+				in="indexingXsltGenerator/generatedFiles/fieldsUnique.xml"
+				out="indexingXsltGenerator/generatedFiles/foxmlToSolrGenerated.xslt"
+				extension=".xslt"
+				style="indexingXsltGenerator/fieldsUniqueToXsltForSolr.xslt">
+			</xslt>
+	        <copy file="indexingXsltGenerator/generatedFiles/foxmlToSolrGenerated.xslt" todir="FgsConfigIndexTemplate/Solr/" preservelastmodified="true" overwrite="true"/>
+
+	</target>
+
+</project>

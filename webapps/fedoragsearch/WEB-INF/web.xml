@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $Id: web.xml 7814 2008-10-31 13:23:21Z gertsp $ -->
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
+    "http://java.sun.com/j2ee/dtds/web-app_2.2.dtd">
+<web-app>
+	<display-name>Fedora Generic Search REST</display-name>
+	<servlet>
+		<servlet-name>AxisServlet</servlet-name>
+		<display-name>Apache-Axis Servlet</display-name>
+		<servlet-class>
+	        org.apache.axis.transport.http.AxisServlet
+	    </servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AdminServlet</servlet-name>
+		<display-name>Axis Admin Servlet</display-name>
+		<servlet-class>
+	        org.apache.axis.transport.http.AdminServlet
+	    </servlet-class>
+        <init-param>
+          <param-name>enableRemoteAdmin</param-name>
+          <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>100</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>/soap/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>/AdminService</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>*.jws</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>/AxisServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AdminServlet</servlet-name>
+		<url-pattern>/AdminServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>GenericSearchREST</servlet-name>
+		<display-name>Fedora Generic Search REST</display-name>
+		<servlet-class>
+			dk.defxws.fedoragsearch.server.RESTImpl
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GenericSearchREST</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+        <servlet-name>UpdateListener</servlet-name>
+        <servlet-class>dk.defxws.fedoragsearch.server.UpdateListener</servlet-class>
+        <load-on-startup>101</load-on-startup>
+    </servlet>
+    <filter>
+      <filter-name>SetupFilter</filter-name>
+      <filter-class>org.fcrepo.server.security.servletfilters.FilterSetup</filter-class>
+    </filter>
+    <filter>
+      <filter-name>XmlUserfileFilter</filter-name>
+      <filter-class>org.fcrepo.server.security.servletfilters.xmluserfile.FilterXmlUserfile</filter-class>
+    </filter>
+    <filter>
+      <filter-name>EnforceAuthnFilter</filter-name>
+      <filter-class>org.fcrepo.server.security.servletfilters.FilterEnforceAuthn</filter-class>
+    </filter>
+    <filter>
+      <filter-name>FinalizeFilter</filter-name>
+      <filter-class>org.fcrepo.server.security.servletfilters.FilterFinalize</filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>SetupFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+      <filter-name>XmlUserfileFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+      <filter-name>EnforceAuthnFilter</filter-name>
+      <servlet-name>AxisServlet</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+      <filter-name>EnforceAuthnFilter</filter-name>
+      <servlet-name>GenericSearchREST</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+      <filter-name>EnforceAuthnFilter</filter-name>
+      <url-pattern>/index.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+      <filter-name>EnforceAuthnFilter</filter-name>
+      <url-pattern>/rest</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+      <filter-name>FinalizeFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	<welcome-file-list id="WelcomeFileList_1">
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>Fedora Management Interface</realm-name>
+	</login-config>
+</web-app>

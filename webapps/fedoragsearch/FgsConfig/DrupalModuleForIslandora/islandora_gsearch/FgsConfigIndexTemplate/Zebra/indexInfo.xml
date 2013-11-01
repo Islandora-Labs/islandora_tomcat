@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resultPage indexName="INDEXNAME">
+ <indexInfo>
+  <AdminInfo>The contents of this page is just an example, 
+  you may edit it in indexInfo.xml,
+  and it is displayed by the getIndexInfo operation
+  with the adminGetIndexInfoToHtml.xslt stylesheet.</AdminInfo>
+  <IndexShortName>INDEXNAME</IndexShortName>
+  <IndexLongName>INDEXNAME index on Zebra</IndexLongName>
+  <Url>http://www.indexdata.dk/zebra/</Url>
+  <Description>Zebra is a high-performance, general-purpose structured 
+  text indexing and retrieval engine. 
+  It reads structured records in a variety of input formats 
+  (eg. email, XML, MARC) and allows access to them 
+  through exact boolean search expressions 
+  and relevance-ranked free-text queries.</Description>
+  <Image>http://www.indexdata.dk/zebra/zebra.png</Image>
+  <SampleSearch>metal</SampleSearch>
+  <Developer>Index Data A/S</Developer>
+  <Contact>info@indexdata.dk</Contact>
+  <Attribution>Index Data A/S &amp;copy; 2005, Index Data A/S,
+   All Rights Reserved</Attribution>
+ </indexInfo>
+</resultPage>
