@@ -105,7 +105,7 @@ https://wiki.duraspace.org/display/FEDORA36/Spring+Security
 		application server. If set to eg &quot;myfedora&quot; the URL for Fedora will result
 		in http[s]://fedoraServerHost[:fedoraServerPort]/myfedora.</comment>
   </param>
-  <param name="fedoraShutdownPort" value="8005">
+  <param name="fedoraShutdownPort" value="8055">
     <comment>Defines the port number used to shutdown the Fedora sever; 
 		default is 8005.</comment>
   </param>
@@ -216,7 +216,7 @@ https://wiki.duraspace.org/display/FEDORA36/Spring+Security
             RELS-INT datastreams where these are not already present when
             adding relationships via addRelationship.  Must be &quot;X&quot; or &quot;M&quot;.</comment>
     </param>
-    <param name="pidNamespace" value="changeme">
+    <param name="pidNamespace" value="islandora">
       <comment>This is the namespace id for pids of newly-created objects. 
 	    	This should be unique for a repository. It can be from 1 to 17 
 	    	characters, and may only contain A-Z, a-z, 0-9, &apos;.&apos;, or &apos;-&apos; (dash).</comment>

@@ -46,6 +46,7 @@
         LABEL="Abstract Method Map" MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="UNSPECIFIED">
         <METS:xmlData>
           <fmm:MethodMap name="Fedora MethodMap for NSDL Exhibit (Style 1)" xmlns:fmm="http://fedora.comm.nsdlib.org/service/methodmap">
+            <fmm:Method operationName="getDocument"/>
             <fmm:Method operationName="getDocumentStyle1"/>
             <fmm:Method operationName="getDocumentStyle2"/>
           </fmm:MethodMap>
